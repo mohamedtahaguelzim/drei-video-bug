@@ -51,13 +51,19 @@ function Player({ src, shouldPlay }) {
  */
 export default function App() {
   const [id, setId] = useState(0);           // index of current video
+  const [counter, setCounter] = useState(0); // to force re-renders if needed
   const [shouldPlay, setShouldPlay] = useState(false); // controls unmuting
-  const sources = ["video1.mp4", "video2.mp4"]; // two test videos
+  const sources = ["video1.mp4?key="+counter, "video2.mp4?key="+counter]; // two test videos
+  
+  const switchVideo = () => {
+    setId((id + 1) % sources.length);
+    setCounter(counter + 1);
+  };
 
   return (
     <div>
       {/* Switch between videos */}
-      <button onClick={() => setId((id + 1) % 2)}>Switch Video</button>
+      <button onClick={switchVideo}>Switch Video</button>
 
       {/* Unmute/play the video audio */}
       <button onClick={() => setShouldPlay(true)}>Unmute/Play</button>
